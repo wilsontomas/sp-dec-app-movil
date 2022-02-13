@@ -11,13 +11,13 @@
 
     <string name="registerBtn">No tienes cuenta? registrate aqui</string>
     <string name="registerTitle">Creacion de usuario</string>
-    <string name="registerBtnAction">Crear</string>
+    <string name="registerBtnAction">Crear usuario</string>
     <string name="registerNamelLabel">Usuario</string>
     <string name="registerPasswordLabel">Clave</string>
     <string name="registerPasswordConfirm">Confirmar clave</string>
 
 
-    <string name="backBtn">Volver</string>
+    <string name="backBtn">Cancelar</string>
     <string name="userName">Usuario</string>
     <string name="nombre">Nombre</string>
     <string name="apellido">Apellido</string>
@@ -25,10 +25,12 @@
     <string name="telefono">Telefono</string>
     <string name="fecha">Fecha</string>
     <string name="pais">Pais</string>
+    <string name="provincia">Provincia</string>
     <string name="correo">Correo</string>
     <string name="direccion">Direccion</string>
     <string name="radioMale">Hombre</string>
     <string name="radioFemale">Mujer</string>
+
 
 
     <string name="forgotPasswordBtn">Olvidaste tu clave? click aqui</string>
