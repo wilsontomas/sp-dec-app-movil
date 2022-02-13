@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.Navigation
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import model.UserData
 
@@ -28,8 +31,11 @@ class MenuFragment : Fragment() {
 
     //private lateinit var firebaseDatabase: FirebaseDatabase;
     private  lateinit var firebaseAuth: FirebaseAuth;
+    private lateinit var firebaseDatabase: FirebaseDatabase;
     private lateinit var view1:View;
-    //private lateinit var userData: UserData;
+    private lateinit var userData: UserData;
+    //private lateinit var userinfocontainer:<anoni>
+
 
     //btn
     private lateinit var logOutBtn:Button;
@@ -50,6 +56,7 @@ class MenuFragment : Fragment() {
         view1 =view;
         //initialization
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         //firebaseDatabase = FirebaseDatabase.getInstance();
         logOutBtn = view.findViewById(R.id.logOutBtnAction);
         logOutBtn.setOnClickListener {
@@ -62,6 +69,7 @@ class MenuFragment : Fragment() {
         if(firebaseAuth.currentUser == null){
             Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_loginFragment);
         }
+        getUserData();
     }
     companion object {
         /**
@@ -86,5 +94,39 @@ class MenuFragment : Fragment() {
     private fun logOut(view: View){
         firebaseAuth.signOut();
         Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_loginFragment);
+    }
+    private fun getSoloData(data:DataSnapshot,keyName:String):String{
+        return data.child(keyName).value.toString();
+    }
+    private fun setUsetData(data:DataSnapshot){
+
+        userData = UserData();
+        userData.setusername(getSoloData(data,"username"));
+        userData.setnombre(getSoloData(data,"nombre"));
+        userData.setapellido(getSoloData(data,"apellido"));
+        userData.settelefono(getSoloData(data,"telefono"));
+        userData.setcorreo(getSoloData(data,"correo"));
+        userData.setfecha(getSoloData(data,"fecha"));
+        userData.setsexo(getSoloData(data,"sexo"));
+        userData.setpais(getSoloData(data,"pais"));
+        userData.setprovincia(getSoloData(data,"provincia"));
+        userData.setdireccion(getSoloData(data,"direccion"));
+
+
+        //userData.username = data.child("username").value.toString();
+        Toast.makeText(activity,"la data es ${userData.username()}", Toast.LENGTH_SHORT).show();
+
+    }
+    private fun getUserData(){
+        val user = firebaseAuth.currentUser;
+        var nameUser:String ="";
+        if(user != null){
+            nameUser=user.email!!.replace("@gmail.com","");
+        }
+        firebaseDatabase.reference
+            .child("message").child(nameUser).get().addOnSuccessListener(OnSuccessListener { data:DataSnapshot->
+                setUsetData(data);
+            });
+
     }
 }

@@ -40,16 +40,16 @@ class RegisterFragment : Fragment() {
     private lateinit var backBtn:Button;
     //end btns
     //fields
-    private lateinit var username:String;
-    private lateinit var nombre:String;
-    private lateinit var apellido:String;
-    private lateinit var telegono:String;
-    private lateinit var correo:String;
-    private lateinit var fecha:String;
-    private lateinit var sexo:String;
-    private lateinit var pais:String;
-    private lateinit var provincia:String;
-    private lateinit var direccion:String;
+    private lateinit var usernamev:String;
+    private lateinit var nombrev:String;
+    private lateinit var apellidov:String;
+    private lateinit var telefonov:String;
+    private lateinit var correov:String;
+    private lateinit var fechav:String;
+    private lateinit var sexov:String;
+    private lateinit var paisv:String;
+    private lateinit var provinciav:String;
+    private lateinit var direccionv:String;
     private lateinit var password:String;
     private lateinit var passwordConfirm:String;
 
@@ -122,27 +122,27 @@ class RegisterFragment : Fragment() {
         return view.findViewById<TextView>(id).text.toString().trim();
     }
     private fun getFieldsValue(view: View){
-        username = getTextView(view,R.id.userName);
-        nombre = getTextView(view,R.id.nombre);
-        apellido = getTextView(view,R.id.apellido);
-        telegono = getTextView(view,R.id.telefono);
-        correo = getTextView(view,R.id.correo);
-        fecha =getTextView(view,R.id.fecha);
+        usernamev = getTextView(view,R.id.userName);
+        nombrev = getTextView(view,R.id.nombre);
+        apellidov = getTextView(view,R.id.apellido);
+        telefonov = getTextView(view,R.id.telefono);
+        correov = getTextView(view,R.id.correo);
+        fechav =getTextView(view,R.id.fecha);
         val checked:Boolean = view.findViewById<RadioButton>(R.id.hombre).isChecked;
         if(checked){
-            sexo = "hombre";
+            sexov = "hombre";
         }else{
-            sexo = "mujer";
+            sexov = "mujer";
         }
 
-        pais = getTextView(view,R.id.pais);
-        provincia = getTextView(view,R.id.provincia);
-        direccion = getTextView(view,R.id.direccion);
+        paisv = getTextView(view,R.id.pais);
+        provinciav = getTextView(view,R.id.provincia);
+        direccionv = getTextView(view,R.id.direccion);
         password = getTextView(view,R.id.password);
         passwordConfirm = getTextView(view,R.id.passwordConfirm);
 
     }
-    private fun validatePassword(view: View):Boolean{
+    private fun validatePassword():Boolean{
         if(password == passwordConfirm){
 
             return true;
@@ -152,10 +152,10 @@ class RegisterFragment : Fragment() {
     }
     private fun validateFields(view: View):Boolean{
         getFieldsValue(view);
-        if(username.isEmpty() || nombre.isEmpty() || apellido.isEmpty()
-            || telegono.isEmpty() || correo.isEmpty() || fecha.isEmpty()
-            || sexo.isEmpty() || pais.isEmpty() || provincia.isEmpty()
-            || direccion.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()
+        if(usernamev.isEmpty() || nombrev.isEmpty() || apellidov.isEmpty()
+            || telefonov.isEmpty() || correov.isEmpty() || fechav.isEmpty()
+            || sexov.isEmpty() || paisv.isEmpty() || provinciav.isEmpty()
+            || direccionv.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()
         ){
             Toast.makeText(activity,"Faltan campos por rellenar", Toast.LENGTH_SHORT).show();
             return false;
@@ -163,19 +163,34 @@ class RegisterFragment : Fragment() {
         return true;
     }
     private fun saveOtherInfo(){
-        val userdata= UserData("$username@gmail.com",nombre,apellido,telegono,correo,fecha,sexo,pais,provincia,direccion);
 
-       firebaseDatabase.getReference("message").child(username).setValue(userdata).addOnFailureListener {
+
+        val userobjectinfo=object {
+            var username=usernamev;
+            var nombre =nombrev;
+            var apellido=apellidov;
+            var telefono=telefonov;
+            var correo= correov;
+            var fecha=fechav;
+            var sexo=sexov;
+            var pais=paisv;
+            var provincia=provinciav;
+            var direccion=direccionv;
+        }
+
+
+       firebaseDatabase.getReference("message").child(usernamev).setValue(userobjectinfo).addOnFailureListener {
            Toast.makeText(activity,"No se pudieron guardar los datos del usuario", Toast.LENGTH_SHORT).show();
        }
 
     }
     private fun signUp(view:View){
-        if(validateFields(view) && validatePassword(view)){
+        if(validateFields(view) && validatePassword()){
             val registerActivityObject = MainActivity();
-            firebaseAuth.createUserWithEmailAndPassword("$username@gmail.com", password)
+            firebaseAuth.createUserWithEmailAndPassword("$usernamev@gmail.com", password)
                 .addOnCompleteListener(registerActivityObject,OnCompleteListener
                     { task: Task<AuthResult> -> if(task.isSuccessful){
+
                         saveOtherInfo();
                         navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
                     }else{
