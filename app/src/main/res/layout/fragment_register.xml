@@ -17,6 +17,12 @@
             android:gravity="center"
             >
 
+            <ImageView
+                android:id="@+id/registroimg"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/registro1" />
+
             <TextView
                 android:id="@+id/registertitle"
                 android:layout_width="match_parent"

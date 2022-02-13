@@ -5,13 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginFragment">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         >
+
+        <ImageView
+            android:id="@+id/loginimg"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/loginTitle"
+            android:src="@drawable/user" />
 
         <TextView
             android:id="@+id/textView"
@@ -86,4 +95,7 @@
             />
 
     </LinearLayout>
+
+</ScrollView>
+
 </FrameLayout>

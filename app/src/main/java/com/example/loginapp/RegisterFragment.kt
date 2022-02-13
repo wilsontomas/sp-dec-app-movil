@@ -91,8 +91,6 @@ class RegisterFragment : Fragment() {
         super.onStart()
         val currentUser = firebaseAuth.currentUser;
         if(currentUser != null){
-            val valor = currentUser.isEmailVerified;
-            Toast.makeText(activity, "el estado es: $valor",Toast.LENGTH_SHORT).show();
             navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
         }
     }
@@ -162,7 +160,7 @@ class RegisterFragment : Fragment() {
         }
         return true;
     }
-    private fun saveOtherInfo(){
+    private fun saveOtherInfo(userId:String){
 
 
         val userobjectinfo=object {
@@ -179,7 +177,7 @@ class RegisterFragment : Fragment() {
         }
 
 
-       firebaseDatabase.getReference("message").child(usernamev).setValue(userobjectinfo).addOnFailureListener {
+       firebaseDatabase.getReference("usersDb").child(userId).setValue(userobjectinfo).addOnFailureListener {
            Toast.makeText(activity,"No se pudieron guardar los datos del usuario", Toast.LENGTH_SHORT).show();
        }
 
@@ -190,8 +188,8 @@ class RegisterFragment : Fragment() {
             firebaseAuth.createUserWithEmailAndPassword("$usernamev@gmail.com", password)
                 .addOnCompleteListener(registerActivityObject,OnCompleteListener
                     { task: Task<AuthResult> -> if(task.isSuccessful){
-
-                        saveOtherInfo();
+                        val user=firebaseAuth.currentUser?.uid;
+                        saveOtherInfo(user!!);
                         navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
                     }else{
                         Toast.makeText(activity,"Error al crear o el usuario ya existe ${task.exception?.message}", Toast.LENGTH_SHORT).show();

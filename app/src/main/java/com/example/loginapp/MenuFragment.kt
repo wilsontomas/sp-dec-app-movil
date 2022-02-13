@@ -57,7 +57,6 @@ class MenuFragment : Fragment() {
         //initialization
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        //firebaseDatabase = FirebaseDatabase.getInstance();
         logOutBtn = view.findViewById(R.id.logOutBtnAction);
         logOutBtn.setOnClickListener {
             logOut(view);
@@ -114,17 +113,14 @@ class MenuFragment : Fragment() {
 
 
         //userData.username = data.child("username").value.toString();
-        Toast.makeText(activity,"la data es ${userData.username()}", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(activity,"la data es ${userData.username()}", Toast.LENGTH_SHORT).show();
 
     }
     private fun getUserData(){
-        val user = firebaseAuth.currentUser;
-        var nameUser:String ="";
-        if(user != null){
-            nameUser=user.email!!.replace("@gmail.com","");
-        }
+        val user = firebaseAuth.currentUser?.uid;
+
         firebaseDatabase.reference
-            .child("message").child(nameUser).get().addOnSuccessListener(OnSuccessListener { data:DataSnapshot->
+            .child("usersDb").child(user!!).get().addOnSuccessListener(OnSuccessListener { data:DataSnapshot->
                 setUsetData(data);
             });
 
