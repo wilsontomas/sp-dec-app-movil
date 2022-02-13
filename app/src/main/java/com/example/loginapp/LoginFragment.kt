@@ -71,11 +71,11 @@ class LoginFragment : Fragment() {
         }
         registerBtn = view.findViewById(R.id.registerTextBtn);
         registerBtn.setOnClickListener {
-            navigateMethod(view1,R.id.action_loginFragment_to_registerFragment);
+            navigateMethod(view,R.id.action_loginFragment_to_registerFragment);
         }
         forgotBtn = view.findViewById(R.id.forgotTextBtn);
         forgotBtn.setOnClickListener {
-            navigateMethod(view1,R.id.action_loginFragment_to_forgotFragment);
+            navigateMethod(view,R.id.action_loginFragment_to_forgotFragment);
         }
 
         //end of methods
@@ -126,7 +126,7 @@ class LoginFragment : Fragment() {
         if (validateCredential(view)) {
             val mainObject =MainActivity();
 
-            firebaseAuth.signInWithEmailAndPassword("$nombre/@gmail.com", clave)
+            firebaseAuth.signInWithEmailAndPassword("$nombre@gmail.com", clave)
                 .addOnCompleteListener(mainObject, OnCompleteListener { task: Task<AuthResult> ->
                     if (task.isSuccessful) {
 

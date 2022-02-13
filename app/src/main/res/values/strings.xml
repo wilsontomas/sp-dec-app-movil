@@ -13,7 +13,7 @@
     <string name="registerTitle">Creacion de usuario</string>
     <string name="registerBtnAction">Crear usuario</string>
     <string name="registerNamelLabel">Usuario</string>
-    <string name="registerPasswordLabel">Clave</string>
+    <string name="registerPassword">Clave</string>
     <string name="registerPasswordConfirm">Confirmar clave</string>
 
 
@@ -37,4 +37,6 @@
     <string name="forgotPasswordAction">Recuperar</string>
     <string name="forgotTitle">Menu de recuperacion</string>
     <string name="forgotName">Nombre de usuario</string>
+
+    <string name="logOut">Cerrar sesion</string>
 </resources>
