@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">LoginApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">login</string>
+
+    <string name="loginTitle">Inicio de sesion</string>
+    <string name="loginBtn">Ingresar</string>
+    <string name="loginNamelLabel">Nombre de usuario</string>
+    <string name="loginPasswordLabel">clave</string>
+    <string name="logOutBtnText">Cerrar Sesion</string>
+
+    <string name="registerBtn">No tienes cuenta? registrate aqui</string>
+    <string name="registerTitle">Creacion de usuario</string>
+    <string name="registerBtnAction">Crear</string>
+    <string name="registerNamelLabel">Usuario</string>
+    <string name="registerPasswordLabel">Clave</string>
+    <string name="registerPasswordConfirm">Confirmar clave</string>
+
+
+    <string name="backBtn">Volver</string>
+    <string name="userName">Usuario</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="sexo">Sexo</string>
+    <string name="telefono">Telefono</string>
+    <string name="fecha">Fecha</string>
+    <string name="pais">Pais</string>
+    <string name="correo">Correo</string>
+    <string name="direccion">Direccion</string>
+    <string name="radioMale">Hombre</string>
+    <string name="radioFemale">Mujer</string>
+
+
+    <string name="forgotPasswordBtn">Olvidaste tu clave? click aqui</string>
+    <string name="forgotPasswordAction">Recuperar</string>
+    <string name="forgotTitle">Menu de recuperacion</string>
+    <string name="forgotName">Nombre de usuario</string>
 </resources>
