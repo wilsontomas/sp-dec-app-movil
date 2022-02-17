@@ -133,19 +133,5 @@ class MenuFragment : Fragment() {
             });
 
     }
-    private fun showTextValues(view: View){
-        //valores
-        view.findViewById<TextView>(R.id.menuUsername).setText(userData.username());
-        view.findViewById<TextView>(R.id.menuNombre).setText(userData.nombre());
-        view.findViewById<TextView>(R.id.menuApellido).setText(userData.apellido());
-        view.findViewById<TextView>(R.id.menuCorreo).setText(userData.correo());
-        view.findViewById<TextView>(R.id.menuDireccion).setText(userData.direccion());
-        view.findViewById<TextView>(R.id.menuFecha).setText(userData.fecha());
-        view.findViewById<TextView>(R.id.menuPais).setText(userData.pais());
-        view.findViewById<TextView>(R.id.menuProvincia).setText(userData.provincia());
-        view.findViewById<TextView>(R.id.menuSexo).setText(userData.sexo());
-        view.findViewById<TextView>(R.id.menuTelefono).setText(userData.telefono());
 
-        //fin valores
-    }
 }

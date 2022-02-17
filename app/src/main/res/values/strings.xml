@@ -8,7 +8,7 @@
     <string name="loginNamelLabel">Nombre de usuario</string>
     <string name="loginPasswordLabel">clave</string>
     <string name="logOutBtnText">Cerrar Sesion</string>
-
+    <string name="loginForgot">Ya tienes cuenta? Inicia sesion</string>
     <string name="registerBtn">No tienes cuenta? registrate aqui</string>
     <string name="registerTitle">Creacion de usuario</string>
     <string name="registerBtnAction">Crear usuario</string>

@@ -154,6 +154,7 @@ class RegisterFragment : Fragment() {
             || telefonov.isEmpty() || correov.isEmpty() || fechav.isEmpty()
             || sexov.isEmpty() || paisv.isEmpty() || provinciav.isEmpty()
             || direccionv.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()
+
         ){
             Toast.makeText(activity,"Faltan campos por rellenar", Toast.LENGTH_SHORT).show();
             return false;

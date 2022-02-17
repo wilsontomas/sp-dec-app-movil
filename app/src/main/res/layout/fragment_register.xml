@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="phone"
                 android:hint="@string/telefono"
                 android:autofillHints="phone"
                 android:layout_margin="20dp"/>
