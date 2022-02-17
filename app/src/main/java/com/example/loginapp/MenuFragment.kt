@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.google.android.gms.tasks.OnSuccessListener
@@ -34,7 +35,18 @@ class MenuFragment : Fragment() {
     private lateinit var firebaseDatabase: FirebaseDatabase;
     private lateinit var view1:View;
     private lateinit var userData: UserData;
-    //private lateinit var userinfocontainer:<anoni>
+
+    //textViews
+    private lateinit var username:TextView;
+    private lateinit var nombre:TextView;
+    private lateinit var apellido:TextView;
+    private lateinit var correo:TextView;
+    private lateinit var direccion:TextView;
+    private lateinit var fecha:TextView;
+    private lateinit var pais:TextView;
+    private lateinit var provincia:TextView;
+    private lateinit var sexo:TextView;
+    private lateinit var telefono:TextView;
 
 
     //btn
@@ -69,6 +81,7 @@ class MenuFragment : Fragment() {
             Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_loginFragment);
         }
         getUserData();
+        //showTextValues(view1);
     }
     companion object {
         /**
@@ -95,25 +108,20 @@ class MenuFragment : Fragment() {
         Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_loginFragment);
     }
     private fun getSoloData(data:DataSnapshot,keyName:String):String{
-        return data.child(keyName).value.toString();
+        return keyName+": "+data.child(keyName).value.toString();
     }
     private fun setUsetData(data:DataSnapshot){
 
-        userData = UserData();
-        userData.setusername(getSoloData(data,"username"));
-        userData.setnombre(getSoloData(data,"nombre"));
-        userData.setapellido(getSoloData(data,"apellido"));
-        userData.settelefono(getSoloData(data,"telefono"));
-        userData.setcorreo(getSoloData(data,"correo"));
-        userData.setfecha(getSoloData(data,"fecha"));
-        userData.setsexo(getSoloData(data,"sexo"));
-        userData.setpais(getSoloData(data,"pais"));
-        userData.setprovincia(getSoloData(data,"provincia"));
-        userData.setdireccion(getSoloData(data,"direccion"));
-
-
-        //userData.username = data.child("username").value.toString();
-        //Toast.makeText(activity,"la data es ${userData.username()}", Toast.LENGTH_SHORT).show();
+        view1.findViewById<TextView>(R.id.menuUsername).setText(getSoloData(data,"username"));
+        view1.findViewById<TextView>(R.id.menuNombre).setText(getSoloData(data,"nombre"));
+        view1.findViewById<TextView>(R.id.menuApellido).setText(getSoloData(data,"apellido"));
+        view1.findViewById<TextView>(R.id.menuTelefono).setText(getSoloData(data,"telefono"));
+        view1.findViewById<TextView>(R.id.menuCorreo).setText(getSoloData(data,"correo"));
+        view1.findViewById<TextView>(R.id.menuFecha).setText(getSoloData(data,"fecha"));
+        view1.findViewById<TextView>(R.id.menuSexo).setText(getSoloData(data,"sexo"));
+        view1.findViewById<TextView>(R.id.menuPais).setText(getSoloData(data,"pais"));
+        view1.findViewById<TextView>(R.id.menuProvincia).setText(getSoloData(data,"provincia"));
+        view1.findViewById<TextView>(R.id.menuDireccion).setText(getSoloData(data,"direccion"));
 
     }
     private fun getUserData(){
@@ -124,5 +132,20 @@ class MenuFragment : Fragment() {
                 setUsetData(data);
             });
 
+    }
+    private fun showTextValues(view: View){
+        //valores
+        view.findViewById<TextView>(R.id.menuUsername).setText(userData.username());
+        view.findViewById<TextView>(R.id.menuNombre).setText(userData.nombre());
+        view.findViewById<TextView>(R.id.menuApellido).setText(userData.apellido());
+        view.findViewById<TextView>(R.id.menuCorreo).setText(userData.correo());
+        view.findViewById<TextView>(R.id.menuDireccion).setText(userData.direccion());
+        view.findViewById<TextView>(R.id.menuFecha).setText(userData.fecha());
+        view.findViewById<TextView>(R.id.menuPais).setText(userData.pais());
+        view.findViewById<TextView>(R.id.menuProvincia).setText(userData.provincia());
+        view.findViewById<TextView>(R.id.menuSexo).setText(userData.sexo());
+        view.findViewById<TextView>(R.id.menuTelefono).setText(userData.telefono());
+
+        //fin valores
     }
 }
