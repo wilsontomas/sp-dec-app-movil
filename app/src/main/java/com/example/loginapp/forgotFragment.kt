@@ -2,6 +2,7 @@ package com.example.loginapp
 
 import android.os.Bundle
 import android.telephony.SmsManager
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import model.UserData
+import java.util.regex.Pattern
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,7 +67,7 @@ class forgotFragment : Fragment() {
 
         recover = view.findViewById(R.id.forgotBtnAction2);
         recover.setOnClickListener {
-            getUserNumber();
+            sendEmail(view);
            // navigateMethod(view,R.id.action_forgotFragment_to_registerFragment)
         }
 
@@ -106,14 +108,23 @@ class forgotFragment : Fragment() {
         Navigation.findNavController(view).navigate(action);
 
     }
-    private fun messaje(msg:String){
+    private fun message(msg:String){
         Toast.makeText(activity,msg,Toast.LENGTH_LONG).show();
 
+    }
+    private fun validateEmail(email:String):Boolean{
+        val pattern:Pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
     private fun validateUsername(view: View):Boolean{
         val userNameValidate = view.findViewById<EditText>(R.id.forgotUserName).text.toString().trim();
         if(userNameValidate.isEmpty()){
-            messaje("Debe agregar el nombre de usuario");
+            message("Debe agregar el correo del usuario");
+
+            return false;
+        }
+        if(!validateEmail(userNameValidate)){
+            message("Ingrese un correo con formato valido");
 
             return false;
         }
@@ -121,40 +132,18 @@ class forgotFragment : Fragment() {
         return true;
     }
 
-    private fun getSoloData(data:DataSnapshot,keyName:String):String{
-        return data.child(keyName).value.toString();
-    }
-    private fun getUserNumber(){
-       if(validateUsername(view1)){
-            firebaseDatabase.reference
-           .child("usersDb").orderByChild("username").equalTo(username)
-                .get().addOnSuccessListener(
-                    OnSuccessListener { data:DataSnapshot->
-                        if(data.hasChildren()){
-                        data.children.forEach { dataSnapshot ->
-                            val numero = dataSnapshot.child("telefono").value.toString();
-                            //messaje(numero);
-                            //userNumber = numero;
-                            sendMessage(numero);
-                        }}else{messaje("No se encontro el usuario");}
-                }).addOnFailureListener(OnFailureListener {
-                    messaje("Algo salio mal");
-                })
+
+
+    private fun sendEmail(view: View){
+        if(validateUsername(view)){
+     firebaseAuth.sendPasswordResetEmail(username).addOnSuccessListener(OnSuccessListener{
+        message("Se ha enviado un correo de recuperacion de contraseña, revise su correo");
+         navigateMethod(view,R.id.action_forgotFragment_to_loginFragment);
+    }).addOnFailureListener(OnFailureListener {
+        data->message(data.toString())
+    })
         }
-
-
-    }
-
-    private fun sendMessage(numero:String){
-        try{
-            val smsManager:SmsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(numero,null,"Prueba",null,null);
-        }catch (error:Exception){
-            messaje(error.toString());
-           messaje("Numero invalido p fuera de servicio");
-        }
-
-
+           // message("Algo fallo con el correo");
     }
 
 }

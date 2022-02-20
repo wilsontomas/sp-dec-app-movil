@@ -2,6 +2,7 @@ package com.example.loginapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import java.util.regex.Pattern
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +32,7 @@ class LoginFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var nombre:String;
+    private lateinit var gmail:String;
     private lateinit var clave:String;
     private lateinit var loginBtn: Button;
     private lateinit var registerBtn: Button;
@@ -105,19 +107,27 @@ class LoginFragment : Fragment() {
 
     private fun validateCredential(view: View): Boolean {
         val nombreRef = view.findViewById<TextView>(R.id.loginUserName);
-        nombre = nombreRef.text.toString().trim();
+        gmail = nombreRef.text.toString().trim();
 
         val claveRef = view.findViewById<TextView>(R.id.loginPassword);
         clave = claveRef.text.toString().trim();
-        if (nombre.isEmpty() || clave.isEmpty()) {
+        if (gmail.isEmpty() || clave.isEmpty()) {
             Toast.makeText(activity, "Se deben llenar todos los campos", Toast.LENGTH_SHORT)
+                .show();
+            return false;
+        }
+        if(!validateEmail(gmail)){
+            Toast.makeText(activity, "Se deben ingresar un correo valido", Toast.LENGTH_SHORT)
                 .show();
             return false;
         }
         return true;
     }
 
-
+    private fun validateEmail(email:String):Boolean{
+        val pattern: Pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
+    }
     private fun navigateMethod(view:View,action:Int){
         Navigation.findNavController(view).navigate(action);
 
@@ -126,7 +136,7 @@ class LoginFragment : Fragment() {
         if (validateCredential(view)) {
             val mainObject =MainActivity();
 
-            firebaseAuth.signInWithEmailAndPassword("$nombre@gmail.com", clave)
+            firebaseAuth.signInWithEmailAndPassword(gmail, clave)
                 .addOnCompleteListener(mainObject, OnCompleteListener { task: Task<AuthResult> ->
                     if (task.isSuccessful) {
 

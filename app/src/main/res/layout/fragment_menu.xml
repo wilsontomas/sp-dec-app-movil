@@ -25,17 +25,7 @@
                 android:layout_height="200dp"
                 android:src="@drawable/usericon" />
 
-            <TextView
-                android:id="@+id/menuUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
-                android:textSize="15sp"
-                />
+
             <TextView
                 android:id="@+id/menuNombre"
                 android:layout_width="match_parent"
@@ -58,17 +48,7 @@
                 android:layout_marginLeft="50dp"
                 android:textSize="15sp"
                 />
-            <TextView
-                android:id="@+id/menuCorreo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
-                android:textSize="15sp"
-                />
+
             <TextView
                 android:id="@+id/menuDireccion"
                 android:layout_width="match_parent"

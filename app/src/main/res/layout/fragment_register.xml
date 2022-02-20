@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/userName"
+                android:hint="@string/correo"
                 android:inputType="textPersonName"
                 android:layout_margin="20dp"
                 android:autofillHints="username"
@@ -73,16 +73,6 @@
                 android:inputType="phone"
                 android:hint="@string/telefono"
                 android:autofillHints="phone"
-                android:layout_margin="20dp"/>
-
-            <EditText
-                android:id="@+id/correo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/correo"
-                android:autofillHints="emailAddress"
                 android:layout_margin="20dp"/>
 
             <EditText

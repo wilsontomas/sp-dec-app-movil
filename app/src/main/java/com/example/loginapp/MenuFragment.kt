@@ -40,7 +40,6 @@ class MenuFragment : Fragment() {
     private lateinit var username:TextView;
     private lateinit var nombre:TextView;
     private lateinit var apellido:TextView;
-    private lateinit var correo:TextView;
     private lateinit var direccion:TextView;
     private lateinit var fecha:TextView;
     private lateinit var pais:TextView;
@@ -112,11 +111,9 @@ class MenuFragment : Fragment() {
     }
     private fun setUsetData(data:DataSnapshot){
 
-        view1.findViewById<TextView>(R.id.menuUsername).setText(getSoloData(data,"username"));
         view1.findViewById<TextView>(R.id.menuNombre).setText(getSoloData(data,"nombre"));
         view1.findViewById<TextView>(R.id.menuApellido).setText(getSoloData(data,"apellido"));
         view1.findViewById<TextView>(R.id.menuTelefono).setText(getSoloData(data,"telefono"));
-        view1.findViewById<TextView>(R.id.menuCorreo).setText(getSoloData(data,"correo"));
         view1.findViewById<TextView>(R.id.menuFecha).setText(getSoloData(data,"fecha"));
         view1.findViewById<TextView>(R.id.menuSexo).setText(getSoloData(data,"sexo"));
         view1.findViewById<TextView>(R.id.menuPais).setText(getSoloData(data,"pais"));

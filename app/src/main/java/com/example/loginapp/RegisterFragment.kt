@@ -1,6 +1,7 @@
 package com.example.loginapp
 
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.FirebaseDatabase
 import model.UserData
 import java.util.*
+import java.util.regex.Pattern
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -113,6 +115,10 @@ class RegisterFragment : Fragment() {
                 }
             }
     }
+    private fun validateEmail(email:String):Boolean{
+        val pattern: Pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
+    }
     private fun navigateMethod(view:View, action:Int){
         Navigation.findNavController(view).navigate(action);
     }
@@ -124,7 +130,6 @@ class RegisterFragment : Fragment() {
         nombrev = getTextView(view,R.id.nombre);
         apellidov = getTextView(view,R.id.apellido);
         telefonov = getTextView(view,R.id.telefono);
-        correov = getTextView(view,R.id.correo);
         fechav =getTextView(view,R.id.fecha);
         val checked:Boolean = view.findViewById<RadioButton>(R.id.hombre).isChecked;
         if(checked){
@@ -150,13 +155,18 @@ class RegisterFragment : Fragment() {
     }
     private fun validateFields(view: View):Boolean{
         getFieldsValue(view);
-        if(usernamev.isEmpty() || nombrev.isEmpty() || apellidov.isEmpty()
-            || telefonov.isEmpty() || correov.isEmpty() || fechav.isEmpty()
+        if( nombrev.isEmpty() || apellidov.isEmpty()
+            || telefonov.isEmpty() || usernamev.isEmpty() || fechav.isEmpty()
             || sexov.isEmpty() || paisv.isEmpty() || provinciav.isEmpty()
             || direccionv.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()
 
         ){
             Toast.makeText(activity,"Faltan campos por rellenar", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!validateEmail(usernamev)){
+
+            Toast.makeText(activity,"El correo debe tener un formato valido", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -165,11 +175,10 @@ class RegisterFragment : Fragment() {
 
 
         val userobjectinfo=object {
-            var username=usernamev;
+            var correo=usernamev;
             var nombre =nombrev;
             var apellido=apellidov;
             var telefono=telefonov;
-            var correo= correov;
             var fecha=fechav;
             var sexo=sexov;
             var pais=paisv;
@@ -186,14 +195,14 @@ class RegisterFragment : Fragment() {
     private fun signUp(view:View){
         if(validateFields(view) && validatePassword()){
             val registerActivityObject = MainActivity();
-            firebaseAuth.createUserWithEmailAndPassword("$usernamev@gmail.com", password)
+            firebaseAuth.createUserWithEmailAndPassword(usernamev, password)
                 .addOnCompleteListener(registerActivityObject,OnCompleteListener
                     { task: Task<AuthResult> -> if(task.isSuccessful){
                         val user=firebaseAuth.currentUser?.uid;
                         saveOtherInfo(user!!);
                         navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
                     }else{
-                        Toast.makeText(activity,"Error al crear o el usuario ya existe ${task.exception?.message}", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity,"Error al crear o el usuario ya existe", Toast.LENGTH_SHORT).show();
 
                     } });
         }else{
