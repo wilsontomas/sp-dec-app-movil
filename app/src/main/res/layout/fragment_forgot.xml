@@ -4,82 +4,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/fondologin"
     tools:context=".forgotFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center"
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/forgotimg"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/forgot" />
+                android:src="@drawable/candado" />
 
             <TextView
                 android:id="@+id/textMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/forgotTitle"
                 android:layout_margin="30dp"
-                android:textSize="30sp"
                 android:gravity="center"
-                />
+                android:text="@string/forgotTitle"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
 
             <EditText
                 android:id="@+id/forgotUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:hint="@string/correo"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="50dp"
-                android:layout_marginLeft="50dp"
-                />
-
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/input_design"
+                android:ems="10"
+                android:hint="@string/correo"
+                android:inputType="textEmailAddress"
+                android:textAlignment="center" />
 
 
             <Button
                 android:id="@+id/forgotBtnAction2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/forgotPasswordAction"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="100dp"
-                android:layout_marginLeft="100dp"
-                />
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/action_btn"
+                android:text="@string/forgotPasswordAction"
+                android:textColor="@color/white" />
 
 
             <Button
                 android:id="@+id/forgotRegisterBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/registerBtn"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="100dp"
-                android:layout_marginLeft="100dp"
-                />
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/option_btn"
+                android:text="@string/registerBtn"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/forgotLoginBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/loginForgot"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="100dp"
-                android:layout_marginLeft="100dp"
-                />
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/cancel_btn"
+                android:text="@string/loginForgot"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

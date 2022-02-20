@@ -17,6 +17,9 @@
     <string name="registerPasswordConfirm">Confirmar clave</string>
 
 
+    <string name="perfiltxt">Perfil del Usuario</string>
+
+
     <string name="backBtn">Cancelar</string>
     <string name="userName">Usuario</string>
     <string name="nombre">Nombre</string>
@@ -39,4 +42,6 @@
     <string name="forgotName">Nombre de usuario</string>
 
     <string name="logOut">Cerrar sesion</string>
+
+    <string name="cancel" >Volver al login</string>
 </resources>
