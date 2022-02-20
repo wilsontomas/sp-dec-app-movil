@@ -52,22 +52,30 @@
 
             />
 
-        <EditText
-            android:id="@+id/loginPassword"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:hint="@string/loginPasswordLabel"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="50dp"
-            android:textColor="@color/black"
-            android:background="@drawable/input_design"
-            android:textAlignment="center"
-
-            />
+            app:passwordToggleEnabled="true"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:ellipsize="start"
+                android:gravity="center_horizontal"
+                android:paddingLeft="50dp"
+                android:inputType="textPassword"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:textColor="@color/black"
+                android:background="@drawable/input_design"
+                android:hint="@string/loginPasswordLabel"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/loginBtnAction"

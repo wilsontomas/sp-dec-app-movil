@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.FirebaseDatabase
 import model.UserData
 import java.util.*
@@ -146,12 +148,16 @@ class RegisterFragment : Fragment() {
 
     }
     private fun validatePassword():Boolean{
-        if(password == passwordConfirm){
-
-            return true;
+        if(password != passwordConfirm){
+            message("Las claves no coinciden");
+            return false;
         }
-        Toast.makeText(activity,"Las claves no coinciden", Toast.LENGTH_SHORT).show();
-        return false;
+        if(password.length<6 || passwordConfirm.length<6){
+            message("Las claves deben tener al menos 6 caracteres");
+            return false;
+        }
+
+        return true;
     }
     private fun validateFields(view: View):Boolean{
         getFieldsValue(view);
@@ -161,15 +167,20 @@ class RegisterFragment : Fragment() {
             || direccionv.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()
 
         ){
-            Toast.makeText(activity,"Faltan campos por rellenar", Toast.LENGTH_SHORT).show();
+            message("Faltan campos por rellenar");
             return false;
         }
         if(!validateEmail(usernamev)){
 
-            Toast.makeText(activity,"El correo debe tener un formato valido", Toast.LENGTH_SHORT).show();
+            message("El correo debe tener un formato valido");
             return false;
         }
+
         return true;
+    }
+    private fun message(msn:String){
+        Toast.makeText(activity,msn, Toast.LENGTH_SHORT).show();
+
     }
     private fun saveOtherInfo(userId:String){
 
@@ -188,25 +199,24 @@ class RegisterFragment : Fragment() {
 
 
        firebaseDatabase.getReference("usersDb").child(userId).setValue(userobjectinfo).addOnFailureListener {
-           Toast.makeText(activity,"No se pudieron guardar los datos del usuario", Toast.LENGTH_SHORT).show();
+           message("No se pudieron guardar los datos del usuario");
        }
 
     }
     private fun signUp(view:View){
         if(validateFields(view) && validatePassword()){
             val registerActivityObject = MainActivity();
-            firebaseAuth.createUserWithEmailAndPassword(usernamev, password)
-                .addOnCompleteListener(registerActivityObject,OnCompleteListener
-                    { task: Task<AuthResult> -> if(task.isSuccessful){
-                        val user=firebaseAuth.currentUser?.uid;
-                        saveOtherInfo(user!!);
-                        navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
-                    }else{
-                        Toast.makeText(activity,"Error al crear o el usuario ya existe", Toast.LENGTH_SHORT).show();
+            firebaseAuth.createUserWithEmailAndPassword(usernamev, password).addOnSuccessListener(
+                OnSuccessListener{data->
+                    val user=firebaseAuth.currentUser?.uid;
+                    saveOtherInfo(user!!);
+                    message("Usuario creado con exito");
+                    navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
+                }).addOnFailureListener(OnFailureListener {
+                    error->message(error.toString())
+                message("Error al crear o el usuario ya existe");
+            });
 
-                    } });
-        }else{
-            Toast.makeText(activity,"algo ocurrio", Toast.LENGTH_SHORT).show();
         }
     }
 

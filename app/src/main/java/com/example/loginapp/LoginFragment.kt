@@ -112,13 +112,13 @@ class LoginFragment : Fragment() {
         val claveRef = view.findViewById<TextView>(R.id.loginPassword);
         clave = claveRef.text.toString().trim();
         if (gmail.isEmpty() || clave.isEmpty()) {
-            Toast.makeText(activity, "Se deben llenar todos los campos", Toast.LENGTH_SHORT)
-                .show();
+
+            message("Se deben llenar todos los campos");
             return false;
         }
         if(!validateEmail(gmail)){
-            Toast.makeText(activity, "Se deben ingresar un correo valido", Toast.LENGTH_SHORT)
-                .show();
+
+            message("Se deben ingresar un correo valido");
             return false;
         }
         return true;
@@ -132,6 +132,13 @@ class LoginFragment : Fragment() {
         Navigation.findNavController(view).navigate(action);
 
     }
+    private fun message(msn:String){
+        Toast.makeText(
+            activity,
+            msn,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
     private fun logIn(view: View) {
         if (validateCredential(view)) {
             val mainObject =MainActivity();
@@ -139,16 +146,13 @@ class LoginFragment : Fragment() {
             firebaseAuth.signInWithEmailAndPassword(gmail, clave)
                 .addOnCompleteListener(mainObject, OnCompleteListener { task: Task<AuthResult> ->
                     if (task.isSuccessful) {
-
+                        message("Acaba de iniciar sesion");
                         navigateMethod(view,R.id.action_loginFragment_to_menuFragment);
 
                     } else {
 
-                        Toast.makeText(
-                            activity,
-                            "Usuario o clave incorrectos",
-                            Toast.LENGTH_SHORT
-                        ).show()
+
+                        message("Usuario o clave incorrectos");
                     }
 
                 })
