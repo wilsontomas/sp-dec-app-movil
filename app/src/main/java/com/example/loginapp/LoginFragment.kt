@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.example.loginapp.databinding.FragmentLoginBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -32,6 +33,8 @@ class LoginFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private  var _binding: FragmentLoginBinding? =null;
+    private val binding get() = _binding!!;
     private lateinit var gmail:String;
     private lateinit var clave:String;
     private lateinit var loginBtn: Button;
@@ -63,20 +66,17 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
 
         firebaseAuth = FirebaseAuth.getInstance();
-        val view = inflater.inflate(R.layout.fragment_login, container, false);
+        _binding = FragmentLoginBinding.inflate(inflater,container,false);
+        val view = binding.root;
         view1 = view;
         //methods here
-        loginBtn = view.findViewById(R.id.loginBtnAction);
-        loginBtn.setOnClickListener {
+        binding.loginBtnAction.setOnClickListener {
             logIn(view);
-
         }
-        registerBtn = view.findViewById(R.id.registerTextBtn);
-        registerBtn.setOnClickListener {
+        binding.registerTextBtn.setOnClickListener {
             navigateMethod(view,R.id.action_loginFragment_to_registerFragment);
         }
-        forgotBtn = view.findViewById(R.id.forgotTextBtn);
-        forgotBtn.setOnClickListener {
+        binding.forgotTextBtn.setOnClickListener {
             navigateMethod(view,R.id.action_loginFragment_to_forgotFragment);
         }
 
@@ -84,7 +84,10 @@ class LoginFragment : Fragment() {
 
         return view;
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null;
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

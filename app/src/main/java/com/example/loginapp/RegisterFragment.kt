@@ -6,18 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.example.loginapp.databinding.FragmentRegisterBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.database.FirebaseDatabase
 import model.UserData
 import java.util.*
 import java.util.regex.Pattern
@@ -37,23 +33,16 @@ class RegisterFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var firebaseAuth: FirebaseAuth;
-    private lateinit var firebaseDatabase: FirebaseDatabase;
+    private  var _binding: FragmentRegisterBinding? =null;
+    private val binding get() = _binding!!;
+    //private lateinit var firebaseDatabase: FirebaseDatabase;
     private lateinit var view1:View;
-    //btns
-    private lateinit var signUpBtn:Button;
-    private lateinit var backBtn:Button;
-    //end btns
+
     //fields
     private lateinit var usernamev:String;
     private lateinit var nombrev:String;
     private lateinit var apellidov:String;
-    private lateinit var telefonov:String;
-    private lateinit var correov:String;
-    private lateinit var fechav:String;
     private lateinit var sexov:String;
-    private lateinit var paisv:String;
-    private lateinit var provinciav:String;
-    private lateinit var direccionv:String;
     private lateinit var password:String;
     private lateinit var passwordConfirm:String;
 
@@ -72,22 +61,19 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         //methods
-        val view =inflater.inflate(R.layout.fragment_register, container, false);
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        val view = binding.root
         view1 =view;
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
 
-        backBtn = view.findViewById(R.id.backRegisterBtn);
-        backBtn.setOnClickListener {
+        firebaseAuth = FirebaseAuth.getInstance();
+        //firebaseDatabase = FirebaseDatabase.getInstance();
+        binding.backRegisterBtn.setOnClickListener {
             navigateMethod(view,R.id.action_registerFragment_to_loginFragment);
         }
-
-        signUpBtn = view.findViewById(R.id.CrearBtn);
-        signUpBtn.setOnClickListener {
-            signUp(view);
-        }
-
-        //end methods
+       binding.CrearBtn.setOnClickListener {
+           signUp(view);
+       }
+          //end methods
 
         return view;
     }
@@ -97,6 +83,10 @@ class RegisterFragment : Fragment() {
         if(currentUser != null){
             navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null;
     }
     companion object {
         /**
@@ -124,27 +114,21 @@ class RegisterFragment : Fragment() {
     private fun navigateMethod(view:View, action:Int){
         Navigation.findNavController(view).navigate(action);
     }
-    private fun getTextView(view: View,id:Int):String{
-        return view.findViewById<TextView>(id).text.toString().trim();
-    }
+
     private fun getFieldsValue(view: View){
-        usernamev = getTextView(view,R.id.userName);
-        nombrev = getTextView(view,R.id.nombre);
-        apellidov = getTextView(view,R.id.apellido);
-        telefonov = getTextView(view,R.id.telefono);
-        fechav =getTextView(view,R.id.fecha);
-        val checked:Boolean = view.findViewById<RadioButton>(R.id.hombre).isChecked;
+        usernamev = binding.userName.text.toString().trim();
+        nombrev = binding.nombre.text.toString().trim();
+        apellidov = binding.apellido.text.toString().trim();
+
+        val  checked:Boolean = binding.hombre.isChecked;
         if(checked){
             sexov = "hombre";
         }else{
             sexov = "mujer";
         }
 
-        paisv = getTextView(view,R.id.pais);
-        provinciav = getTextView(view,R.id.provincia);
-        direccionv = getTextView(view,R.id.direccion);
-        password = getTextView(view,R.id.password);
-        passwordConfirm = getTextView(view,R.id.passwordConfirm);
+        password = binding.password.text.toString().trim();
+        passwordConfirm = binding.passwordConfirm.text.toString().trim();
 
     }
     private fun validatePassword():Boolean{
@@ -162,9 +146,9 @@ class RegisterFragment : Fragment() {
     private fun validateFields(view: View):Boolean{
         getFieldsValue(view);
         if( nombrev.isEmpty() || apellidov.isEmpty()
-            || telefonov.isEmpty() || usernamev.isEmpty() || fechav.isEmpty()
-            || sexov.isEmpty() || paisv.isEmpty() || provinciav.isEmpty()
-            || direccionv.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()
+             || usernamev.isEmpty()
+            || sexov.isEmpty()
+            ||  password.isEmpty() || passwordConfirm.isEmpty()
 
         ){
             message("Faltan campos por rellenar");
@@ -189,18 +173,15 @@ class RegisterFragment : Fragment() {
             var correo=usernamev;
             var nombre =nombrev;
             var apellido=apellidov;
-            var telefono=telefonov;
-            var fecha=fechav;
+
             var sexo=sexov;
-            var pais=paisv;
-            var provincia=provinciav;
-            var direccion=direccionv;
+
         }
+        message(userobjectinfo.nombre+ " " + userobjectinfo.apellido +" "+ userobjectinfo.correo+" "+ userobjectinfo.sexo);
 
-
-       firebaseDatabase.getReference("usersDb").child(userId).setValue(userobjectinfo).addOnFailureListener {
+     /*  firebaseDatabase.getReference("usersDb").child(userId).setValue(userobjectinfo).addOnFailureListener {
            message("No se pudieron guardar los datos del usuario");
-       }
+       }*/
 
     }
     private fun signUp(view:View){

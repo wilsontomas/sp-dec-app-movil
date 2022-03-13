@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.example.loginapp.databinding.FragmentMenuBinding
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -32,7 +33,9 @@ class MenuFragment : Fragment() {
 
     //private lateinit var firebaseDatabase: FirebaseDatabase;
     private  lateinit var firebaseAuth: FirebaseAuth;
-    private lateinit var firebaseDatabase: FirebaseDatabase;
+    private  var _binding:FragmentMenuBinding? =null;
+    private val binding get() = _binding!!;
+    //private lateinit var firebaseDatabase: FirebaseDatabase;
     private lateinit var view1:View;
     private lateinit var userData: UserData;
 
@@ -40,12 +43,8 @@ class MenuFragment : Fragment() {
     private lateinit var username:TextView;
     private lateinit var nombre:TextView;
     private lateinit var apellido:TextView;
-    private lateinit var direccion:TextView;
-    private lateinit var fecha:TextView;
-    private lateinit var pais:TextView;
-    private lateinit var provincia:TextView;
     private lateinit var sexo:TextView;
-    private lateinit var telefono:TextView;
+
 
 
     //btn
@@ -63,13 +62,15 @@ class MenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_menu, container, false);
-        view1 =view;
+
+        _binding = FragmentMenuBinding.inflate(inflater, container, false)
+        val view = binding.root
+         view1 =view;
         //initialization
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        logOutBtn = view.findViewById(R.id.logOutBtnAction);
-        logOutBtn.setOnClickListener {
+        //firebaseDatabase = FirebaseDatabase.getInstance();
+
+        binding.logOutBtnAction.setOnClickListener {
             logOut(view);
         }
         return view;
@@ -79,8 +80,12 @@ class MenuFragment : Fragment() {
         if(firebaseAuth.currentUser == null){
             Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_loginFragment);
         }
-        getUserData();
+        //getUserData();
         //showTextValues(view1);
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null;
     }
     companion object {
         /**
@@ -110,24 +115,20 @@ class MenuFragment : Fragment() {
         return keyName+": "+data.child(keyName).value.toString();
     }
     private fun setUsetData(data:DataSnapshot){
-
+/*
         view1.findViewById<TextView>(R.id.menuNombre).setText(getSoloData(data,"nombre"));
         view1.findViewById<TextView>(R.id.menuApellido).setText(getSoloData(data,"apellido"));
         view1.findViewById<TextView>(R.id.menuTelefono).setText(getSoloData(data,"telefono"));
-        view1.findViewById<TextView>(R.id.menuFecha).setText(getSoloData(data,"fecha"));
         view1.findViewById<TextView>(R.id.menuSexo).setText(getSoloData(data,"sexo"));
-        view1.findViewById<TextView>(R.id.menuPais).setText(getSoloData(data,"pais"));
-        view1.findViewById<TextView>(R.id.menuProvincia).setText(getSoloData(data,"provincia"));
-        view1.findViewById<TextView>(R.id.menuDireccion).setText(getSoloData(data,"direccion"));
-
+       */
     }
     private fun getUserData(){
         val user = firebaseAuth.currentUser?.uid;
 
-        firebaseDatabase.reference
+      /*  firebaseDatabase.reference
             .child("usersDb").child(user!!).get().addOnSuccessListener(OnSuccessListener { data:DataSnapshot->
                 setUsetData(data);
-            });
+            });*/
 
     }
 

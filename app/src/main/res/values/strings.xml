@@ -35,7 +35,6 @@
     <string name="radioFemale">Mujer</string>
 
 
-
     <string name="forgotPasswordBtn">Olvidaste tu clave? click aqui</string>
     <string name="forgotPasswordAction">Recuperar</string>
     <string name="forgotTitle">Menu de recuperacion</string>
@@ -43,5 +42,5 @@
 
     <string name="logOut">Cerrar sesion</string>
 
-    <string name="cancel" >Volver al login</string>
+    <string name="cancel">Volver al login</string>
 </resources>

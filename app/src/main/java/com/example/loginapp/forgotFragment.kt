@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.example.loginapp.databinding.FragmentForgotBinding
+import com.example.loginapp.databinding.FragmentLoginBinding
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
@@ -33,6 +35,8 @@ class forgotFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding:FragmentForgotBinding?=null;
+    private val binding get() = _binding!!;
     private lateinit var login:Button;
     private lateinit var register:Button;
     private lateinit var recover:Button;
@@ -40,7 +44,7 @@ class forgotFragment : Fragment() {
     private lateinit var firebaseDatabase:FirebaseDatabase;
     private lateinit var view1:View;
     private lateinit var username:String;
-    private lateinit var userNumber:String;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -53,23 +57,24 @@ class forgotFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =inflater.inflate(R.layout.fragment_forgot, container, false);
+        _binding = FragmentForgotBinding.inflate(inflater,container,false);
+        val view = binding.root;
+
         view1=view;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        login = view.findViewById(R.id.forgotLoginBtn);
-        login.setOnClickListener {
+        binding.forgotLoginBtn.setOnClickListener {
             navigateMethod(view,R.id.action_forgotFragment_to_loginFragment)
         }
 
-        register = view.findViewById(R.id.forgotRegisterBtn);
-        register.setOnClickListener { navigateMethod(view,R.id.action_forgotFragment_to_registerFragment) }
-
-        recover = view.findViewById(R.id.forgotBtnAction2);
-        recover.setOnClickListener {
-            sendEmail(view);
-           // navigateMethod(view,R.id.action_forgotFragment_to_registerFragment)
+        binding.forgotRegisterBtn.setOnClickListener {
+            navigateMethod(view,R.id.action_forgotFragment_to_registerFragment)
         }
+
+        binding.forgotBtnAction2.setOnClickListener {
+            sendEmail(view);
+        }
+
 
         // Inflate the layout for this fragment
 
@@ -83,6 +88,10 @@ class forgotFragment : Fragment() {
         if(firebaseAuth.currentUser != null){
             navigateMethod(view1,R.id.action_forgotFragment_to_menuFragment);
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null;
     }
     companion object {
         /**
