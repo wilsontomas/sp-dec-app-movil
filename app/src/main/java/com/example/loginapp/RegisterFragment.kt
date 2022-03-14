@@ -1,5 +1,6 @@
 package com.example.loginapp
 
+import Data.profile_table
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.loginapp.databinding.FragmentRegisterBinding
 import com.google.android.gms.tasks.Task
@@ -15,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import model.UserData
+import services.tasksViewModel
 import java.util.*
 import java.util.regex.Pattern
 
@@ -35,6 +38,7 @@ class RegisterFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth;
     private  var _binding: FragmentRegisterBinding? =null;
     private val binding get() = _binding!!;
+    private lateinit var viewModel:tasksViewModel;
     //private lateinit var firebaseDatabase: FirebaseDatabase;
     private lateinit var view1:View;
 
@@ -74,7 +78,7 @@ class RegisterFragment : Fragment() {
            signUp(view);
        }
           //end methods
-
+        viewModel = ViewModelProvider(requireActivity())[tasksViewModel::class.java];
         return view;
     }
     override fun onStart() {
@@ -178,7 +182,7 @@ class RegisterFragment : Fragment() {
 
         }
         message(userobjectinfo.nombre+ " " + userobjectinfo.apellido +" "+ userobjectinfo.correo+" "+ userobjectinfo.sexo);
-
+        viewModel.addProfile(profile_table(0,userId,nombrev,apellidov,sexov));
      /*  firebaseDatabase.getReference("usersDb").child(userId).setValue(userobjectinfo).addOnFailureListener {
            message("No se pudieron guardar los datos del usuario");
        }*/
