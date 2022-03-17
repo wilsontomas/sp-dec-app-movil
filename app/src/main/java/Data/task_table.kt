@@ -9,6 +9,6 @@ data class task_table(
     val id:Int,
     val user_id:String,
     val name:String,
-    val state:Int
+    val state:String
 ) {
 }

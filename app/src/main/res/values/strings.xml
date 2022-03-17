@@ -18,6 +18,7 @@
 
 
     <string name="perfiltxt">Perfil del Usuario</string>
+    <string name="plusDesc">Agregar</string>
 
     <string name="MenuTask">Lista de Tareas</string>
     <string name="backBtn">Cancelar</string>
@@ -43,4 +44,14 @@
     <string name="logOut">Cerrar sesion</string>
 
     <string name="cancel">Volver al login</string>
+
+    <string name="estado">Estado</string>
+    <string name="completado">Completado</string>
+    <string name="cancelado">cancelado</string>
+    <string name="pendiente">pendiente</string>
+
+    <string name="profileTitulo">Perfil</string>
+    <string name="hintNombre">Ingrese el nombre</string>
+    <string name="hintApellido">Ingrese el apellido</string>
+    <string name="Editar">Editar</string>
 </resources>

@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_menuFragment_to_taskDetailFragment"
             app:destination="@id/taskDetailFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -78,6 +81,15 @@
         tools:layout="@layout/fragment_task_detail" >
         <action
             android:id="@+id/action_taskDetailFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.example.loginapp.addTaskFragment"
+        android:label="fragment_add_task"
+        tools:layout="@layout/fragment_add_task" >
+        <action
+            android:id="@+id/action_addTaskFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
 </navigation>

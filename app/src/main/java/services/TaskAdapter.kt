@@ -12,18 +12,32 @@ import model.taskModel
 class TaskAdapter(
     var tareas:List<taskModel>
 ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
-
-    inner class TaskViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
+    private lateinit var Id:Number;
+    private lateinit var mListener:onItemClickListener
+    interface onItemClickListener{
+        fun itemClick(id:Number)
+    }
+    fun setOnItemClickListener(listener:onItemClickListener){
+        mListener = listener;
+    }
+    inner class TaskViewHolder(itemView:View,listener:onItemClickListener):RecyclerView.ViewHolder(itemView){
+        init{
+            itemView.setOnClickListener {
+                listener.itemClick(adapterPosition);
+            }
+        }
+    }
 
 
    // private lateinit var mListener:
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.task_item,parent,false);
-        return TaskViewHolder(view);
+        return TaskViewHolder(view,mListener);
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.itemView.findViewById<TextView>(R.id.nombreItem).text = tareas[position].nombre;
+       // Id = tareas[position].id;
         when(tareas[position].estado){
            "pendiente"->holder.itemView.findViewById<ImageView>(R.id.imgState).setImageResource(R.drawable.pendding);
             "completado"->holder.itemView.findViewById<ImageView>(R.id.imgState).setImageResource(R.drawable.complete);

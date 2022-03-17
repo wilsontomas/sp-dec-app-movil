@@ -181,8 +181,10 @@ class RegisterFragment : Fragment() {
             var sexo=sexov;
 
         }
-        message(userobjectinfo.nombre+ " " + userobjectinfo.apellido +" "+ userobjectinfo.correo+" "+ userobjectinfo.sexo);
+       // message(userobjectinfo.nombre+ " " + userobjectinfo.apellido +" "+ userobjectinfo.correo+" "+ userobjectinfo.sexo);
+        message("Usuario registrado");
         viewModel.addProfile(profile_table(0,userId,nombrev,apellidov,sexov));
+
      /*  firebaseDatabase.getReference("usersDb").child(userId).setValue(userobjectinfo).addOnFailureListener {
            message("No se pudieron guardar los datos del usuario");
        }*/

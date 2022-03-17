@@ -31,9 +31,12 @@ class tasksViewModel(aplication:Application): AndroidViewModel(aplication) {
 
    private val repositoryTask:task_table_dao;
    private val repositoryProfile:profile_table_dao;
-   private lateinit var taskList:MutableLiveData<List<task_table>>;
-   private lateinit var selectedTask:MutableLiveData<task_table>;
-   private lateinit var selectedProfile:MutableLiveData<profile_table>;
+    private val taskList=MutableLiveData<List<task_table?>>();
+    private val selectedTask=MutableLiveData<task_table?>();
+    var tasklists:LiveData<List<task_table?>> =taskList;
+    var selectedtask:LiveData<task_table?> = selectedTask
+
+    lateinit var selectedProfile:MutableLiveData<profile_table>;
    init{
        val taskDao = taskDatabase.getDatabase(aplication).taskDao();
        repositoryTask = taskDao;
@@ -66,13 +69,14 @@ class tasksViewModel(aplication:Application): AndroidViewModel(aplication) {
    }
    fun getAllTasks(userId:String){
        viewModelScope.launch(Dispatchers.IO) {
-           taskList.value = repositoryTask.getAllTask(userId).value;
+           taskList.postValue(repositoryTask.getAllTask(userId).value);
+
        }
 
    }
    fun getTaskById(taskId:Int){
        viewModelScope.launch(Dispatchers.IO) {
-          selectedTask.value= repositoryTask.getTaskById(taskId).value;
+          selectedTask.postValue(repositoryTask.getTaskById(taskId).value);
        }
 
    }
