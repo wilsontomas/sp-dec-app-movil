@@ -2,6 +2,8 @@ package services
 
 import Data.*
 import android.app.Application
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,11 +34,12 @@ class tasksViewModel(aplication:Application): AndroidViewModel(aplication) {
    private val repositoryTask:task_table_dao;
    private val repositoryProfile:profile_table_dao;
     private val taskList=MutableLiveData<List<task_table?>>();
-    private val selectedTask=MutableLiveData<task_table?>();
+     val selectedTask=MutableLiveData<task_table?>();
     var tasklists:LiveData<List<task_table?>> =taskList;
-    var selectedtask:LiveData<task_table?> = selectedTask
+    var selectedtask:MutableLiveData<task_table?> = selectedTask
 
-    lateinit var selectedProfile:MutableLiveData<profile_table>;
+     lateinit var selectedProfile:profile_table;
+
    init{
        val taskDao = taskDatabase.getDatabase(aplication).taskDao();
        repositoryTask = taskDao;
@@ -49,12 +52,17 @@ class tasksViewModel(aplication:Application): AndroidViewModel(aplication) {
           repositoryProfile.insertProfile(profile);
       }
    }
-
+/*
    fun getProfile(id:String){
        viewModelScope.launch(Dispatchers.IO) {
-           selectedProfile.value = repositoryProfile.getUserById(id).value;
+           selectedProfile.postValue( repositoryProfile.getUserById(id).value);
+
+          // selectedprofile.postValue(selectedProfile.value);
        }
-   }
+   }*/
+    fun getProfileData(id:String):LiveData<profile_table>{
+        return repositoryProfile.getUserById(id);
+    }
    fun updateProfile(idUser:String,name:String, lName:String,userSex:String){
        viewModelScope.launch(Dispatchers.IO) {
            repositoryProfile.updateUser(idUser,name,lName,userSex);
@@ -76,7 +84,10 @@ class tasksViewModel(aplication:Application): AndroidViewModel(aplication) {
    }
    fun getTaskById(taskId:Int){
        viewModelScope.launch(Dispatchers.IO) {
-          selectedTask.postValue(repositoryTask.getTaskById(taskId).value);
+         // selectedTask.postValue(repositoryTask.getTaskById(taskId).value);
+         //selectedtask.value=
+           selectedTask.postValue(tasklists?.value?.get(taskId));
+           selectedtask.postValue(tasklists?.value?.get(taskId));
        }
 
    }

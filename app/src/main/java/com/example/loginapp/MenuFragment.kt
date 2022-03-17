@@ -78,10 +78,26 @@ class MenuFragment : Fragment() {
         }
 
         viewModel = ViewModelProvider(requireActivity())[tasksViewModel::class.java];
+
         viewModel.getAllTasks(firebaseAuth.currentUser?.uid!!);
-        viewModel.tasklists.observe(this, Observer {
-            updateUi(it);
+        viewModel.tasklists.observe(viewLifecycleOwner, Observer {
+            if(!it.isNullOrEmpty()){
+                updateUi(it);
+            }else{
+                Toast.makeText(view1.context,"No hay tareas para mostrar",Toast.LENGTH_SHORT).show();
+            }
+            //
         });
+        //viewModel.getProfile(firebaseAuth.currentUser?.uid!!);
+     /*   viewModel.selectedProfile.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(view.context,it.name,Toast.LENGTH_LONG).show();
+        })*/
+        viewModel.getProfileData(firebaseAuth.currentUser?.uid!!).observe(viewLifecycleOwner,
+            Observer {
+                viewModel.selectedProfile =it;
+                //Toast.makeText(view.context,it.name,Toast.LENGTH_LONG).show();
+                Toast.makeText(view.context,viewModel.selectedProfile.lastName,Toast.LENGTH_LONG).show();
+            })
        /* if(!viewModel.taskList.){
             val datos = viewModel.taskList.value;
 
@@ -103,7 +119,7 @@ class MenuFragment : Fragment() {
         )*/
 
 
-        binding.taskRecycler.layoutManager = LinearLayoutManager(view.context);
+
         //initialization
 
         //firebaseDatabase = FirebaseDatabase.getInstance();
@@ -171,13 +187,15 @@ class MenuFragment : Fragment() {
         adapter.setOnItemClickListener(object :TaskAdapter.onItemClickListener{
             override fun itemClick(id: Number) {
                 //Toast.makeText(view.context,"el id es: "+id,Toast.LENGTH_LONG).show();
-                viewModel.getProfile(firebaseAuth.currentUser?.uid!!);
+                //viewModel.getProfile(firebaseAuth.currentUser?.uid!!);
+
                 Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_taskDetailFragment);
 
             }
 
         });
         binding.taskRecycler.adapter = adapter;
+            binding.taskRecycler.layoutManager = LinearLayoutManager(view1.context);
         }
 
     }

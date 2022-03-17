@@ -69,6 +69,7 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater,container,false);
         val view = binding.root;
         view1 = view;
+
         //methods here
         binding.loginBtnAction.setOnClickListener {
             logIn(view);
