@@ -9,12 +9,15 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.loginapp.databinding.FragmentMenuBinding
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import model.UserData
+import model.taskModel
+import services.TaskAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,11 +42,6 @@ class MenuFragment : Fragment() {
     private lateinit var view1:View;
     private lateinit var userData: UserData;
 
-    //textViews
-    private lateinit var username:TextView;
-    private lateinit var nombre:TextView;
-    private lateinit var apellido:TextView;
-    private lateinit var sexo:TextView;
 
 
 
@@ -66,6 +64,21 @@ class MenuFragment : Fragment() {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val view = binding.root
          view1 =view;
+        var lista = mutableListOf<taskModel>(
+            taskModel(1,"wilson","pendiente"),
+            taskModel(2,"wilson2","cancelado"),
+            taskModel(2,"wilson2","completado"),
+            taskModel(1,"wilson","pendiente"),
+            taskModel(2,"wilson2","cancelado"),
+            taskModel(2,"wilson2","completado"),
+            taskModel(1,"wilson","pendiente"),
+            taskModel(2,"wilson2","cancelado"),
+            taskModel(2,"wilson2","completado")
+        )
+        val adapter = TaskAdapter(lista);
+
+        binding.taskRecycler.adapter = adapter;
+        binding.taskRecycler.layoutManager = LinearLayoutManager(view.context);
         //initialization
         firebaseAuth = FirebaseAuth.getInstance();
         //firebaseDatabase = FirebaseDatabase.getInstance();

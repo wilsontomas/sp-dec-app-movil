@@ -19,7 +19,7 @@
 
     <string name="perfiltxt">Perfil del Usuario</string>
 
-
+    <string name="MenuTask">Lista de Tareas</string>
     <string name="backBtn">Cancelar</string>
     <string name="userName">Usuario</string>
     <string name="nombre">Nombre</string>
