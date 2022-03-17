@@ -43,7 +43,7 @@ class MenuFragment : Fragment() {
     private  var _binding:FragmentMenuBinding? =null;
     private val binding get() = _binding!!;
     private lateinit var viewModel: tasksViewModel;
-    private lateinit var lista:MutableList<taskModel>;
+    private lateinit var lista:List<task_table>;
     //private lateinit var firebaseDatabase: FirebaseDatabase;
     private lateinit var view1:View;
     private lateinit var userData: UserData;
@@ -79,50 +79,28 @@ class MenuFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[tasksViewModel::class.java];
 
-        viewModel.getAllTasks(firebaseAuth.currentUser?.uid!!);
-        viewModel.tasklists.observe(viewLifecycleOwner, Observer {
+        viewModel.getAllTasks(firebaseAuth.currentUser?.uid!!).observe(viewLifecycleOwner, Observer {
             if(!it.isNullOrEmpty()){
                 updateUi(it);
             }else{
                 Toast.makeText(view1.context,"No hay tareas para mostrar",Toast.LENGTH_SHORT).show();
             }
-            //
-        });
+        })
+
+
         //viewModel.getProfile(firebaseAuth.currentUser?.uid!!);
      /*   viewModel.selectedProfile.observe(viewLifecycleOwner, Observer {
             Toast.makeText(view.context,it.name,Toast.LENGTH_LONG).show();
         })*/
         viewModel.getProfileData(firebaseAuth.currentUser?.uid!!).observe(viewLifecycleOwner,
             Observer {
-                viewModel.selectedProfile =it;
-                //Toast.makeText(view.context,it.name,Toast.LENGTH_LONG).show();
-                Toast.makeText(view.context,viewModel.selectedProfile.lastName,Toast.LENGTH_LONG).show();
+                if(it !=null){
+                    viewModel.selectedProfile =it;
+                    //Toast.makeText(view.context,it.name,Toast.LENGTH_LONG).show();
+                   // Toast.makeText(view.context,viewModel.selectedProfile.lastName,Toast.LENGTH_LONG).show();
+                }
+
             })
-       /* if(!viewModel.taskList.){
-            val datos = viewModel.taskList.value;
-
-            datos?.forEach { it->
-                lista.add(taskModel(it.id,it.name,it.state))
-            }
-        }*/
-
-       /* var lista = mutableListOf<taskModel>(
-            taskModel(1,"wilson1","pendiente"),
-            taskModel(2,"wilson2","cancelado"),
-            taskModel(3,"wilson3","completado"),
-            taskModel(4,"wilson4","pendiente"),
-            taskModel(5,"wilson5","cancelado"),
-            taskModel(6,"wilson6","completado"),
-            taskModel(7,"wilson7","pendiente"),
-            taskModel(8,"wilson8","cancelado"),
-            taskModel(9,"wilson9","completado")
-        )*/
-
-
-
-        //initialization
-
-        //firebaseDatabase = FirebaseDatabase.getInstance();
 
         binding.logOutBtnAction.setOnClickListener {
             logOut(view);
@@ -134,12 +112,12 @@ class MenuFragment : Fragment() {
         if(firebaseAuth.currentUser == null){
             Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_loginFragment);
         }
-        //getUserData();
-        //showTextValues(view1);
+
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null;
+
     }
     companion object {
         /**
@@ -165,32 +143,17 @@ class MenuFragment : Fragment() {
         firebaseAuth.signOut();
         Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_loginFragment);
     }
-    private fun getSoloData(data:DataSnapshot,keyName:String):String{
-        return keyName+": "+data.child(keyName).value.toString();
-    }
-    private fun setUsetData(data:DataSnapshot){
-/*
-        view1.findViewById<TextView>(R.id.menuNombre).setText(getSoloData(data,"nombre"));
-        view1.findViewById<TextView>(R.id.menuApellido).setText(getSoloData(data,"apellido"));
-        view1.findViewById<TextView>(R.id.menuTelefono).setText(getSoloData(data,"telefono"));
-        view1.findViewById<TextView>(R.id.menuSexo).setText(getSoloData(data,"sexo"));
-       */
-    }
-    private fun updateUi(listado:List<task_table?>){
+
+    private fun updateUi(listado:List<task_table>){
         if(!listado.isNullOrEmpty()){
-
-
-        listado.forEach{ls->
-            lista.add(taskModel(ls?.id!!,ls?.name!!,ls?.state!!));}
-
+        lista=listado
         val adapter = TaskAdapter(lista);
         adapter.setOnItemClickListener(object :TaskAdapter.onItemClickListener{
             override fun itemClick(id: Number) {
-                //Toast.makeText(view.context,"el id es: "+id,Toast.LENGTH_LONG).show();
-                //viewModel.getProfile(firebaseAuth.currentUser?.uid!!);
 
+                viewModel.taskId = id;
                 Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_taskDetailFragment);
-
+                //Toast.makeText(view1.context,id.toString(),Toast.LENGTH_LONG).show();
             }
 
         });

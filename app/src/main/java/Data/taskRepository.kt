@@ -16,7 +16,7 @@ class taskRepository(private val taskDao:task_table_dao) {
     suspend fun getTaskById(taskId:Int):LiveData<task_table>{
        return taskDao.getTaskById(taskId);
     }
-    suspend fun updateTask(Id:Int, name:String, estado:Int){
+    suspend fun updateTask(Id:Int, name:String, estado:String){
         taskDao.updateTask(Id,name,estado);
     }
 

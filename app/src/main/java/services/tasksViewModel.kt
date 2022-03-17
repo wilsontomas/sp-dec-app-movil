@@ -33,10 +33,11 @@ class tasksViewModel(aplication:Application): AndroidViewModel(aplication) {
 
    private val repositoryTask:task_table_dao;
    private val repositoryProfile:profile_table_dao;
-    private val taskList=MutableLiveData<List<task_table?>>();
-     val selectedTask=MutableLiveData<task_table?>();
-    var tasklists:LiveData<List<task_table?>> =taskList;
-    var selectedtask:MutableLiveData<task_table?> = selectedTask
+    //private val taskList=MutableLiveData<List<task_table?>>();
+    lateinit var taskId:Number;
+     lateinit var selectedTask:task_table;
+    lateinit var tasklists:List<task_table>;
+   // var selectedtask:MutableLiveData<task_table?> = selectedTask
 
      lateinit var selectedProfile:profile_table;
 
@@ -75,30 +76,18 @@ class tasksViewModel(aplication:Application): AndroidViewModel(aplication) {
            repositoryTask.insertTask(taskTable);
        }
    }
-   fun getAllTasks(userId:String){
-       viewModelScope.launch(Dispatchers.IO) {
-           taskList.postValue(repositoryTask.getAllTask(userId).value);
-
-       }
-
+   fun getAllTasks(userId:String):LiveData<List<task_table>>{
+          return repositoryTask.getAllTask(userId);
    }
-   fun getTaskById(taskId:Int){
-       viewModelScope.launch(Dispatchers.IO) {
-         // selectedTask.postValue(repositoryTask.getTaskById(taskId).value);
-         //selectedtask.value=
-           selectedTask.postValue(tasklists?.value?.get(taskId));
-           selectedtask.postValue(tasklists?.value?.get(taskId));
-       }
 
-   }
-   fun updateTask(Id:Int, name:String, estado:Int){
+   fun updateTask(Id:Int, name:String, estado:String){
        viewModelScope.launch(Dispatchers.IO) {
            repositoryTask.updateTask(Id,name,estado);
        }
    }
-   fun deleteTask(Id:Int){
+   fun deleteTask(Id:Number){
        viewModelScope.launch(Dispatchers.IO) {
-           repositoryTask.deleteTask(Id);
+           repositoryTask.deleteTask(Id.toInt());
        }
    }
    //end tasks

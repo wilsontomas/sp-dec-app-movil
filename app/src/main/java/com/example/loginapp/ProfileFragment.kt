@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.example.loginapp.databinding.FragmentMenuBinding
 import com.example.loginapp.databinding.FragmentProfileBinding
+import com.google.firebase.auth.FirebaseAuth
 import services.tasksViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +30,7 @@ class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private  lateinit var firebaseAuth: FirebaseAuth;
     private lateinit var profileId:profile_table;
     private  var _binding: FragmentProfileBinding? =null;
     private val binding get() = _binding!!;
@@ -50,16 +52,9 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
         view1 = view;
+        firebaseAuth = FirebaseAuth.getInstance();
         viewModel = ViewModelProvider(requireActivity())[tasksViewModel::class.java];
-       /* viewModel.selectedProfile.observe(viewLifecycleOwner, Observer {
-            if(it !=null){
-                binding.profileNombre.setText(profileId.name);
-                binding.profileApellido.setText(profileId.lastName);
-                Toast.makeText(view.context,profileId.userId,Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(view.context,"Errro al cargar usuario",Toast.LENGTH_SHORT).show();
-            }
-        })*/
+
         binding.profileNombre.setText(viewModel.selectedProfile.name);
         binding.profileApellido.setText(viewModel.selectedProfile.lastName);
         if(viewModel.selectedProfile.sex=="hombre"){
@@ -79,9 +74,17 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         return view;
     }
+    override fun onStart() {
+        super.onStart()
+        if(firebaseAuth.currentUser == null){
+            Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_loginFragment);
+        }
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null;
+
     }
     companion object {
         /**

@@ -49,9 +49,13 @@
     <string name="completado">Completado</string>
     <string name="cancelado">cancelado</string>
     <string name="pendiente">pendiente</string>
+    <string name="erase">Borrar tarea</string>
 
     <string name="profileTitulo">Perfil</string>
     <string name="hintNombre">Ingrese el nombre</string>
     <string name="hintApellido">Ingrese el apellido</string>
     <string name="Editar">Editar</string>
+    <string name="nombreTarea">Nombre de la tarea</string>
+    <string name="agregar">Agregar Tarea</string>
+    <string name="agregar1">Creacion de tarea</string>
 </resources>

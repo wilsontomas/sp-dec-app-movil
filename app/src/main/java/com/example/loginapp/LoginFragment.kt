@@ -82,12 +82,17 @@ class LoginFragment : Fragment() {
         }
 
         //end of methods
-
+        //delete database
+   // view.context.deleteDatabase("task_database");
         return view;
     }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null;
+       // Runtime.getRuntime().gc();
+
     }
     companion object {
         /**

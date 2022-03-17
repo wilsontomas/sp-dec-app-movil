@@ -1,5 +1,6 @@
 package services
 
+import Data.task_table
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.example.loginapp.R
 import model.taskModel
 
 class TaskAdapter(
-    var tareas:List<taskModel>
+    var tareas:List<task_table>
 ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     private lateinit var Id:Number;
     private lateinit var mListener:onItemClickListener
@@ -36,9 +37,9 @@ class TaskAdapter(
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.itemView.findViewById<TextView>(R.id.nombreItem).text = tareas[position].nombre;
+        holder.itemView.findViewById<TextView>(R.id.nombreItem).text = tareas[position].name;
        // Id = tareas[position].id;
-        when(tareas[position].estado){
+        when(tareas[position].state){
            "pendiente"->holder.itemView.findViewById<ImageView>(R.id.imgState).setImageResource(R.drawable.pendding);
             "completado"->holder.itemView.findViewById<ImageView>(R.id.imgState).setImageResource(R.drawable.complete);
             "cancelado"->holder.itemView.findViewById<ImageView>(R.id.imgState).setImageResource(R.drawable.cancel);

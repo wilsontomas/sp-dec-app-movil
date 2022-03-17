@@ -17,7 +17,7 @@ interface task_table_dao {
     fun getTaskById(idTask:Int):LiveData<task_table>
 
     @Query("UPDATE task_table SET name=:nombre, state=:estado WHERE id=:idTask")
-    fun updateTask(idTask:Int,nombre:String, estado:Int)
+    fun updateTask(idTask:Int,nombre:String, estado:String)
 
     @Query("DELETE FROM task_table WHERE id =:idTask")
     fun deleteTask(idTask:Int)

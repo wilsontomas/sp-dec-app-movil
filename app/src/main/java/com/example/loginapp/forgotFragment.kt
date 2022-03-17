@@ -37,9 +37,6 @@ class forgotFragment : Fragment() {
     private var param2: String? = null
     private var _binding:FragmentForgotBinding?=null;
     private val binding get() = _binding!!;
-    private lateinit var login:Button;
-    private lateinit var register:Button;
-    private lateinit var recover:Button;
     private lateinit var firebaseAuth:FirebaseAuth;
     private lateinit var firebaseDatabase:FirebaseDatabase;
     private lateinit var view1:View;

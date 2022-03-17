@@ -1,10 +1,19 @@
 package com.example.loginapp
 
+import Data.task_table
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import com.example.loginapp.databinding.FragmentAddTaskBinding
+import com.example.loginapp.databinding.FragmentTaskDetailBinding
+import com.google.firebase.auth.FirebaseAuth
+import services.tasksViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +29,12 @@ class TaskDetailFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private  var _binding: FragmentTaskDetailBinding? =null;
+    private val binding get() = _binding!!;
+    private lateinit var view1:View;
+    private  lateinit var firebaseAuth: FirebaseAuth;
+    private lateinit var viewModel: tasksViewModel;
+    lateinit var task: task_table;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,10 +47,45 @@ class TaskDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_detail, container, false)
-    }
+        _binding = FragmentTaskDetailBinding.inflate(inflater, container, false)
+        val view = binding.root
+        view1 = view;
+        firebaseAuth = FirebaseAuth.getInstance();
+        viewModel = ViewModelProvider(requireActivity())[tasksViewModel::class.java];
 
+        viewModel.getAllTasks(viewModel.selectedProfile.userId).observe(viewLifecycleOwner, Observer {
+
+            if(it !=null){
+                task = it[viewModel.taskId.toInt()];
+                setValues(task);
+            }
+        })
+
+        binding.editActionTask.setOnClickListener {
+            updateTask();
+        }
+        binding.backTaskBtn.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_taskDetailFragment_to_menuFragment);
+        }
+        binding.eraseTaskBtn.setOnClickListener {
+            borrarTarea();
+        }
+        return view;
+        // Inflate the layout for this fragment
+    }
+    override fun onStart() {
+        super.onStart()
+        if(firebaseAuth.currentUser == null){
+            Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_loginFragment);
+        }
+        //getUserData();
+        //showTextValues(view1);
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null;
+
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -55,5 +104,40 @@ class TaskDetailFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+    fun setValues(valor:task_table){
+        binding.taskNombreDesc.setText(valor.name);
+        when(valor.state){
+            "completado"->binding.completadoRadio.isChecked=true;
+            "cancelado"->binding.canceladoRadio.isChecked=true;
+            "pendiente"->binding.pendienteRadio.isChecked=true;
+            else->{
+                Toast.makeText(view1.context,"Valor de estado invalido", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    fun updateTask(){
+        if(binding.taskNombreDesc.text.isNullOrEmpty()){
+            Toast.makeText(view1.context,"Debe llenar la descripcion", Toast.LENGTH_SHORT).show();
+        }else{
+            var estado="";
+            if(binding.completadoRadio.isChecked){
+                estado = "completado";
+            }else if(binding.canceladoRadio.isChecked){
+                estado = "cancelado";
+            }else{
+                estado = "pendiente";
+            }
+            viewModel.updateTask(task.id,binding.taskNombreDesc.text.toString(),estado);
+            Toast.makeText(view1.context,"Tarea actualizada", Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(view1).navigate(R.id.action_taskDetailFragment_to_menuFragment);
+        }
+    }
+    fun borrarTarea(){
+
+            viewModel.deleteTask(task.id);
+            Toast.makeText(view1.context,"Tarea borrada", Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(view1).navigate(R.id.action_taskDetailFragment_to_menuFragment);
+
     }
 }

@@ -3,12 +3,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:largeHeap="true"
+    android:background="@drawable/addfondo"
     tools:context=".addTaskFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/taskImg"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/taskicon" />
+
+            <TextView
+                android:id="@+id/taskTxtAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/agregar1"
+                android:textSize="30sp"
+                android:layout_margin="30dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+
+                />
+
+            <EditText
+                android:id="@+id/taskNombreDescAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/nombreTarea"
+                android:inputType="textPersonName"
+                android:layout_margin="20dp"
+                android:autofillHints="Nombre"
+                android:background="@drawable/input_design"
+                android:textAlignment="center"
+                />
+
+
+
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/estadoTaskAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/estado"
+                    android:textColor="@color/white"
+                    android:gravity="start"
+                    android:layout_margin="20dp"
+                    android:textSize="20sp"
+                    />
+
+                <RadioButton android:id="@+id/completadoRadioAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="@string/completado"
+                    android:checked="true"
+                    />
+                <RadioButton android:id="@+id/pendienteRadioAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="@string/pendiente"
+                    />
+                <RadioButton android:id="@+id/canceladoRadioAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="@string/cancelado"
+                    />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/addActionTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/action_btn"
+                android:textColor="@color/white"
+                android:text="@string/agregar" />
+
+            <Button
+                android:id="@+id/backTaskAddBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cancel_btn"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                android:text="@string/backBtn" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </FrameLayout>
