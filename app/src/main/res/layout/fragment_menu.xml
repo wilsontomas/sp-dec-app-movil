@@ -38,19 +38,18 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginLeft="50dp"
-                android:layout_below="@id/imageViewMenu"
+                android:layout_below="@id/filterBtn"
                 android:text="@string/MenuTask"
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/taskRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:id="@+id/taskRecycler"
                 android:layout_below="@id/menuTxtId"
-                android:background="@color/white"
-                />
+                android:background="@color/white" />
 
             <Button
                 android:id="@+id/logOutBtnAction"
@@ -84,6 +83,37 @@
                 android:contentDescription="@string/plusDesc"
                 android:layout_margin="16dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/filterTxt"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_below="@id/imageViewMenu"
+                android:text="@string/filtro"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/spinnerBar"
+                android:layout_below="@id/filterTxt"
+                android:background="@drawable/input_design"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/filterBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cancel_btn"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/spinnerBar"
+                android:textColor="@color/white"
+                android:text="@string/filtroAction" />
         </RelativeLayout>
     </ScrollView>
 

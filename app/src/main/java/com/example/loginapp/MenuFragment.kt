@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -48,6 +49,7 @@ class MenuFragment : Fragment() {
     private val binding get() = _binding!!;
     private lateinit var viewModel: tasksViewModel;
     private lateinit var lista:List<task_table>;
+    private lateinit var listaFiltrada:List<task_table>;
     //private lateinit var firebaseDatabase: FirebaseDatabase;
     private lateinit var view1:View;
     private lateinit var userData: UserData;
@@ -111,6 +113,11 @@ class MenuFragment : Fragment() {
         }
         var path = "https://www.google.com/url?sa=i&url=https%3A%2F%2Flovepik.com%2Fimage-400258192%2Fbusiness-background-cell-phone-wallpaper.html&psig=AOvVaw0G-RswiVkDq63vYWZXg9gt&ust=1647656694554000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOD306HAzvYCFQAAAAAdAAAAABAE";
         //Picasso.get().load(path).into(binding.imageViewMenu);
+        setSpinner();
+        binding.filterBtn.setOnClickListener {
+            filtrar();
+            //Toast.makeText(view.context, binding.spinnerBar.selectedItem.toString(),Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
@@ -170,44 +177,41 @@ class MenuFragment : Fragment() {
         }
 
     }
-    fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
-        // Raw height and width of image
-        val (height: Int, width: Int) = options.run { outHeight to outWidth }
-        var inSampleSize = 1
 
-        if (height > reqHeight || width > reqWidth) {
+    fun setSpinner(){
 
-            val halfHeight: Int = height / 2
-            val halfWidth: Int = width / 2
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+            view1.context,
+            R.array.spinnerList,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            binding.spinnerBar.adapter = adapter
+        }
+    }
 
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
-                inSampleSize *= 2
+    fun filtrar(){
+
+        if(binding.spinnerBar.selectedItem.toString()=="ninguno"){
+            listaFiltrada=lista;
+        }else{
+            listaFiltrada=lista.filter { it.state==binding.spinnerBar.selectedItem.toString() }
+        }
+
+        val adapter = TaskAdapter(listaFiltrada);
+        adapter.setOnItemClickListener(object :TaskAdapter.onItemClickListener{
+            override fun itemClick(id: Number) {
+
+                viewModel.taskId = id;
+                Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_taskDetailFragment);
+                //Toast.makeText(view1.context,id.toString(),Toast.LENGTH_LONG).show();
             }
-        }
 
-        return inSampleSize
+        });
+        binding.taskRecycler.adapter = adapter;
+        binding.taskRecycler.layoutManager = LinearLayoutManager(view1.context);
     }
-    fun decodeSampledBitmapFromResource(
-        res: Resources,
-        resId: Int,
-        reqWidth: Int,
-        reqHeight: Int
-    ): Bitmap {
-        // First decode with inJustDecodeBounds=true to check dimensions
-        return BitmapFactory.Options().run {
-            inJustDecodeBounds = true
-            BitmapFactory.decodeResource(res, resId, this)
-
-            // Calculate inSampleSize
-            inSampleSize = calculateInSampleSize(this, reqWidth, reqHeight)
-
-            // Decode bitmap with inSampleSize set
-            inJustDecodeBounds = false
-
-            BitmapFactory.decodeResource(res, resId, this)
-        }
-    }
-
 }

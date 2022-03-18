@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerList">
+        <item>ninguno</item>
+        <item>pendiente</item>
+        <item>cancelado</item>
+        <item>completado</item>
+    </string-array>
+</resources>

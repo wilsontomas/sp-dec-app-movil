@@ -58,4 +58,6 @@
     <string name="nombreTarea">Nombre de la tarea</string>
     <string name="agregar">Agregar Tarea</string>
     <string name="agregar1">Creacion de tarea</string>
+    <string name="filtro">Filtrar por Estado</string>
+    <string name="filtroAction">Filtrar</string>
 </resources>

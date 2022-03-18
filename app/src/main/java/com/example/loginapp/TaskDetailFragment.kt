@@ -1,12 +1,15 @@
 package com.example.loginapp
 
 import Data.task_table
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -136,10 +139,22 @@ class TaskDetailFragment : Fragment() {
         }
     }
     fun borrarTarea(){
+            val deleteBuilder = AlertDialog.Builder(view1.context);
+            deleteBuilder.setTitle("Eliminacion de Tarea");
+            deleteBuilder.setMessage("Desea eliminar la tarea?");
+            deleteBuilder.setPositiveButton("Si",DialogInterface.OnClickListener{Dialog, id->
+                viewModel.deleteTask(task.id);
+                Toast.makeText(view1.context,"Tarea borrada", Toast.LENGTH_SHORT).show();
+                Dialog.cancel();
+                Navigation.findNavController(view1).navigate(R.id.action_taskDetailFragment_to_menuFragment);
+            });
+            deleteBuilder.setNegativeButton("No",DialogInterface.OnClickListener{Dialog, id->
+            Dialog.cancel();
+        });
+    var alert:AlertDialog = deleteBuilder.create();
+        alert.show();
 
-            viewModel.deleteTask(task.id);
-            Toast.makeText(view1.context,"Tarea borrada", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(view1).navigate(R.id.action_taskDetailFragment_to_menuFragment);
+
 
     }
 }
