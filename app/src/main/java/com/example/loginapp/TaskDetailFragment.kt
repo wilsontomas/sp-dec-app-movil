@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.example.loginapp.databinding.FragmentAddTaskBinding
 import com.example.loginapp.databinding.FragmentTaskDetailBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import services.tasksViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -70,6 +71,7 @@ class TaskDetailFragment : Fragment() {
         binding.eraseTaskBtn.setOnClickListener {
             borrarTarea();
         }
+       // Picasso.get().load(R.drawable.taskicon).into(binding.taskImg);
         return view;
         // Inflate the layout for this fragment
     }

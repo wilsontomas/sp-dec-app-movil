@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import com.example.loginapp.databinding.FragmentMenuBinding
 import com.example.loginapp.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import services.tasksViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -72,6 +73,7 @@ class ProfileFragment : Fragment() {
         Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_menuFragment);
     }
         // Inflate the layout for this fragment
+       // Picasso.get().load(R.drawable.perfil).into(binding.profileImg);
         return view;
     }
     override fun onStart() {

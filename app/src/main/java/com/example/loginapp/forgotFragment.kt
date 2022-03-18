@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 import model.UserData
 import java.util.regex.Pattern
 
@@ -74,7 +75,7 @@ class forgotFragment : Fragment() {
 
 
         // Inflate the layout for this fragment
-
+       // Picasso.get().load(R.drawable.candado).into(binding.forgotimg);
 
         return view;
     }

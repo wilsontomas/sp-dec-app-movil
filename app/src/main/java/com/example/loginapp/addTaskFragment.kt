@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.example.loginapp.databinding.FragmentAddTaskBinding
 import com.example.loginapp.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import services.tasksViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,6 +60,7 @@ class addTaskFragment : Fragment() {
         binding.backTaskAddBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_addTaskFragment_to_menuFragment);
         }
+       // Picasso.get().load(R.drawable.taskicon).into(binding.taskImg);
         return view;
     }
     override fun onStart() {

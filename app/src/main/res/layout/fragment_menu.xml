@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".MenuFragment"
-    android:background="@drawable/menufondo"
+
     >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:id="@+id/menuId"
+        android:background="@color/menu"
         >
         <RelativeLayout
             android:layout_width="match_parent"

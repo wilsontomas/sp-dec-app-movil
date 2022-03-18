@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:largeHeap="true"
-    android:background="@drawable/addfondo"
+    android:background="@color/add"
     tools:context=".addTaskFragment">
 
     <ScrollView

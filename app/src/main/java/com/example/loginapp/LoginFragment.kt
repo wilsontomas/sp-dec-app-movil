@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import java.util.regex.Pattern
 
 // TODO: Rename parameter arguments, choose names that match
@@ -84,6 +85,7 @@ class LoginFragment : Fragment() {
         //end of methods
         //delete database
    // view.context.deleteDatabase("task_database");
+        //Picasso.get().load(R.drawable.user).into(binding.loginimg);
         return view;
     }
 

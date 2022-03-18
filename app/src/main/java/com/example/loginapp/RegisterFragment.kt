@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.squareup.picasso.Picasso
 import model.UserData
 import services.tasksViewModel
 import java.util.*
@@ -79,6 +80,7 @@ class RegisterFragment : Fragment() {
        }
           //end methods
         viewModel = ViewModelProvider(requireActivity())[tasksViewModel::class.java];
+     //   Picasso.get().load(R.drawable.registro1).into(binding.registroimg);
         return view;
     }
     override fun onStart() {
