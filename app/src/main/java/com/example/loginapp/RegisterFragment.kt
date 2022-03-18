@@ -174,24 +174,15 @@ class RegisterFragment : Fragment() {
     }
     private fun saveOtherInfo(userId:String){
 
-
         val userobjectinfo=object {
             var correo=usernamev;
             var nombre =nombrev;
             var apellido=apellidov;
 
             var sexo=sexov;
-
         }
-       // message(userobjectinfo.nombre+ " " + userobjectinfo.apellido +" "+ userobjectinfo.correo+" "+ userobjectinfo.sexo);
-        message("Usuario registrado");
         viewModel.addProfile(profile_table(0,userId,nombrev,apellidov,sexov));
-
-     /*  firebaseDatabase.getReference("usersDb").child(userId).setValue(userobjectinfo).addOnFailureListener {
-           message("No se pudieron guardar los datos del usuario");
-       }*/
-
-    }
+ }
     private fun signUp(view:View){
         if(validateFields(view) && validatePassword()){
             val registerActivityObject = MainActivity();
@@ -202,7 +193,7 @@ class RegisterFragment : Fragment() {
                     message("Usuario creado con exito");
                     navigateMethod(view1,R.id.action_registerFragment_to_menuFragment);
                 }).addOnFailureListener(OnFailureListener {
-                    error->message(error.toString())
+
                 message("Error al crear o el usuario ya existe");
             });
 

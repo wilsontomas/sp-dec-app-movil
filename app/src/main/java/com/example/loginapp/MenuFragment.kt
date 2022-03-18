@@ -102,21 +102,17 @@ class MenuFragment : Fragment() {
             Observer {
                 if(it !=null){
                     viewModel.selectedProfile =it;
-                    //Toast.makeText(view.context,it.name,Toast.LENGTH_LONG).show();
-                   // Toast.makeText(view.context,viewModel.selectedProfile.lastName,Toast.LENGTH_LONG).show();
-                }
+                       }
 
             })
 
         binding.logOutBtnAction.setOnClickListener {
             logOut(view);
         }
-        var path = "https://www.google.com/url?sa=i&url=https%3A%2F%2Flovepik.com%2Fimage-400258192%2Fbusiness-background-cell-phone-wallpaper.html&psig=AOvVaw0G-RswiVkDq63vYWZXg9gt&ust=1647656694554000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOD306HAzvYCFQAAAAAdAAAAABAE";
-        //Picasso.get().load(path).into(binding.imageViewMenu);
+
         setSpinner();
         binding.filterBtn.setOnClickListener {
             filtrar();
-            //Toast.makeText(view.context, binding.spinnerBar.selectedItem.toString(),Toast.LENGTH_SHORT).show();
         }
 
         return view;
@@ -131,7 +127,6 @@ class MenuFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null;
-        //Toast.makeText(view1.context,"Se destruyo el fragmento",Toast.LENGTH_SHORT).show();
 
     }
     companion object {

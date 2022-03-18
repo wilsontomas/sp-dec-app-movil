@@ -60,4 +60,5 @@
     <string name="agregar1">Creacion de tarea</string>
     <string name="filtro">Filtrar por Estado</string>
     <string name="filtroAction">Filtrar</string>
+    <string name="taskediting">Edicion de Tarea</string>
 </resources>
