@@ -72,16 +72,33 @@ class MenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         firebaseAuth = FirebaseAuth.getInstance();
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val view = binding.root
          view1 =view;
-        binding.plus.setOnClickListener {
+        binding.toolbarMenu.inflateMenu(R.menu.task_menu);
+        binding.toolbarMenu.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.profileMenu->
+                {
+                    Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_profileFragment);
+                true;
+                }
+                R.id.taskMenu->
+                {
+                    Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_addTaskFragment);
+                    true;
+                }
+                else->false
+            }
+        }
+      /*  binding.plus.setOnClickListener {
             Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_addTaskFragment);
         }
         binding.profile.setOnClickListener {
             Navigation.findNavController(view1).navigate(R.id.action_menuFragment_to_profileFragment);
-        }
+        }*/
 
         viewModel = ViewModelProvider(requireActivity())[tasksViewModel::class.java];
 
